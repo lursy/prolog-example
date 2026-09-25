@@ -1,5 +1,6 @@
 # prolog-example
 
+```pl
 % SISTEMA ESPECIALISTA EM PROLOG
 
 % Fatos
@@ -34,3 +35,4 @@ orientacao(Situacao, Texto) :-
 orientacao(Situacao, 'Nenhuma irregularidade identificada.') :-
     situacao(Situacao),
     \+ problema(Situacao, _).
+```
