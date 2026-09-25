@@ -28,11 +28,23 @@ conselho(salario, 'O salario mensal deve ser pago ate o 5o dia util do mes segui
 conselho(documentacao, 'Os documentos da rescisao devem ser entregues no prazo legal (art. 477 da CLT).').
 
 % Regras
-orientacao(Situacao, Texto) :-
-    problema(Situacao, Tipo),
+% R1 - Combinacao de condicoes: situacao conhecida + problema + conselho
+orientacao(S, Texto) :-
+    situacao(S),
+    problema(S, Tipo),
     conselho(Tipo, Texto).
-% Regra com negacao
-orientacao(Situacao, 'Nenhuma irregularidade identificada.') :-
-    situacao(Situacao),
-    \+ problema(Situacao, _).
+
+% R2 - Negacao: situacao conhecida sem problema
+orientacao(S, 'Nenhuma irregularidade identificada.') :-
+    situacao(S),
+    \+ problema(S, _).
+
+% R3 - Negacao: situacao nao cadastrada
+orientacao(S, 'Situacao nao reconhecida pelo sistema.') :-
+    \+ situacao(S).
+
+% R4 - Combinacao: problema que envolve dinheiro (tudo menos documentacao)
+pendencia_financeira(S) :-
+    problema(S, Tipo),
+    Tipo \= documentacao.
 ```
